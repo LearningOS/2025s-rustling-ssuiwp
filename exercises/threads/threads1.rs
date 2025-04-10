@@ -8,8 +8,6 @@
 // Execute `rustlings hint threads1` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 use std::thread;
 use std::time::{Duration, Instant};
 
@@ -27,8 +25,17 @@ fn main() {
     let mut results: Vec<u128> = vec![];
     for handle in handles {
         // TODO: a struct is returned from thread::spawn, can you use it?
+        let result = handle.join();
+        match result {
+            Ok(a) => {
+                println!("thread {} completed", a);
+                results.push(a);
+            }
+            Err(a) => {
+                println!("thread {:?} failed", a);
+            }
+        }
     }
-
     if results.len() != 10 {
         panic!("Oh no! All the spawned threads did not finish!");
     }
